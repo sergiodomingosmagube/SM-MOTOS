@@ -1,0 +1,1685 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SM-MOTOS | Luxury Moto </title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="SM-MOTOS: O showroom de motos mais exclusivo de Moçambique. Coleções limitadas, performance de elite e atendimento privado em Tete.">
+    <meta name="keywords" content="motos, luxo, Moçambique, Tete, SM-MOTOS, showroom, motos desportivas">
+    <meta property="og:title" content="SM-MOTOS | Luxury Moto Showroom">
+    <meta property="og:description" content="Sinta a adrenalina e o design das motos mais exclusivas de Tete.">
+    <meta property="og:image" content="opengraph.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <style>
+        /* ======================================
+           DESIGN SYSTEM — 100% OFFLINE
+        ====================================== */
+        :root {
+            --primary: #D4A017;
+            --bg: #0a0a0a;
+            --card: #121212;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: #fff;
+            font-family: 'Trebuchet MS', 'Gill Sans', Arial, sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: default;
+            line-height: 1.6;
+        }
+
+        /* Display font — sem Google Fonts */
+        .font-display,
+        h1, h2, h3, h4,
+        .logo, .footer-logo,
+        .card-name, .catalog-title,
+        .preloader-text, .contact-title {
+            font-family: 'Impact', 'Arial Black', 'Arial Narrow', Arial, sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        ::selection { background: var(--primary); color: black; }
+
+        a { color: inherit; text-decoration: none; }
+
+        /* ====== SCROLLBAR ====== */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); }
+
+        /* ====== NOISE OVERLAY ====== */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.15; pointer-events: none; z-index: 9999; mix-blend-mode: overlay;
+        }
+
+        /* ====== STUDIO LIGHT ====== */
+        #studio-light {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(212,160,23,0.05) 0%, transparent 70%);
+            pointer-events: none; z-index: 5;
+            transition: background 0.5s ease;
+        }
+
+        /* ====== SCROLL PROGRESS ====== */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 2px;
+            background: var(--primary); z-index: 101; width: 0;
+            transition: width 0.1s linear;
+        }
+
+        /* ====== PRELOADER ====== */
+        #preloader {
+            position: fixed; inset: 0; z-index: 100; background: var(--bg);
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        .preloader-panel {
+            position: absolute; top: 0; bottom: 0; width: 50%; background: var(--bg);
+            transition: transform 1.5s cubic-bezier(0.87, 0, 0.13, 1);
+        }
+        .preloader-panel:first-child { left: 0; border-right: 1px solid rgba(255,255,255,0.05); }
+        .preloader-panel:last-child { right: 0; border-left: 1px solid rgba(255,255,255,0.05); }
+        .preloader-panel.exit-left  { transform: translateX(-100%); }
+        .preloader-panel.exit-right { transform: translateX(100%); }
+
+        #preloader-inner { position: relative; z-index: 10; text-align: center; }
+
+        #preloader-text {
+            font-size: clamp(2.5rem, 10vw, 5.5rem);
+            letter-spacing: 0.3em; text-transform: uppercase;
+            opacity: 0; transition: opacity 0.8s ease;
+            font-weight: 900;
+        }
+        #preloader-bar {
+            margin-top: 2rem; height: 1px; background: var(--primary);
+            width: 0; transition: width 1.2s ease;
+            margin-left: auto; margin-right: auto;
+        }
+
+        /* ====== HEADER ====== */
+        #header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 50;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 2rem 2.5rem;
+            transition: all 0.5s ease;
+        }
+        #header.glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10,10,10,0.75);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1.2rem 2.5rem;
+        }
+
+        .logo {
+            font-size: 2rem; letter-spacing: -0.05em;
+            text-transform: uppercase; color: #fff; font-weight: 900;
+        }
+        .logo .accent { color: var(--primary); }
+
+        nav {
+            display: flex; gap: 2.5rem;
+        }
+        @media (max-width: 768px) { nav { display: none; } }
+        nav a {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em;
+            font-weight: 700; color: rgba(255,255,255,0.5);
+            transition: color 0.3s ease;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        nav a:hover { color: var(--primary); }
+
+        /* ====== LOGIN BUTTON ====== */
+        .header-right { display: flex; align-items: center; gap: 1.2rem; }
+
+        .btn-login {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.2em; color: #fff;
+            border: 1px solid rgba(212,160,23,0.6);
+            padding: 8px 18px; cursor: pointer;
+            background: transparent;
+            transition: all 0.3s ease;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .btn-login:hover {
+            background: var(--primary); color: #000;
+            border-color: var(--primary);
+        }
+
+        /* ====== RENT MODAL ====== */
+        #rent-modal {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.88);
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+        #rent-modal.open { display: flex; }
+        .rent-box {
+            background: #111; border: 1px solid rgba(212,160,23,0.25);
+            width: 100%; max-width: 420px; padding: 2.5rem; position: relative;
+        }
+        .rent-close { position: absolute; top: 1rem; right: 1.2rem; background: none; border: none; color: rgba(255,255,255,0.4); font-size: 1.4rem; cursor: pointer; }
+        .rent-close:hover { color: var(--primary); }
+        .rent-step { display: none; }
+        .rent-step.active { display: block; }
+        .rent-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4em; color: var(--primary); font-family: 'Trebuchet MS', sans-serif; margin-bottom: 0.5rem; }
+        .rent-title { font-size: 1.4rem; font-weight: 900; text-transform: uppercase; color: #fff; margin-bottom: 1.5rem; }
+        .rent-summary { background: rgba(212,160,23,0.05); border: 1px solid rgba(212,160,23,0.15); padding: 1rem 1.2rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
+        .rent-summary-name { font-size: 13px; font-weight: 900; text-transform: uppercase; color: #fff; font-family: 'Trebuchet MS', sans-serif; }
+        .rent-summary-price { font-size: 12px; color: rgba(255,255,255,0.4); font-family: 'Trebuchet MS', sans-serif; }
+        .rent-field { margin-bottom: 1.1rem; }
+        .rent-field label { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(255,255,255,0.4); margin-bottom: 6px; font-family: 'Trebuchet MS', sans-serif; }
+        .rent-field input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 14px; font-size: 14px; outline: none; transition: border 0.3s; box-sizing: border-box; font-family: 'Trebuchet MS', sans-serif; }
+        .rent-field input:focus { border-color: var(--primary); }
+        .rent-row-fields { display: flex; gap: 1rem; }
+        .rent-row-fields .rent-field { flex: 1; }
+        .rent-total-box { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 1rem; margin-bottom: 1.2rem; display: flex; justify-content: space-between; align-items: center; }
+        .rent-total-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.4); font-family: 'Trebuchet MS', sans-serif; }
+        .rent-total-value { font-size: 1.1rem; font-weight: 900; color: var(--primary); }
+        .rent-submit { width: 100%; padding: 13px; background: var(--primary); color: #000; border: none; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3em; cursor: pointer; font-family: 'Trebuchet MS', sans-serif; transition: opacity 0.3s; }
+        .rent-submit:hover { opacity: 0.85; }
+        .rent-processing { text-align: center; padding: 2.5rem 0; }
+        .rent-spinner { width: 44px; height: 44px; border: 2px solid rgba(255,255,255,0.1); border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1.2rem; }
+        .rent-processing-text { font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em; color: rgba(255,255,255,0.4); font-family: 'Trebuchet MS', sans-serif; }
+        .rent-success { text-align: center; padding: 1.5rem 0; }
+        .rent-check { width: 60px; height: 60px; border-radius: 50%; background: rgba(212,160,23,0.1); border: 2px solid var(--primary); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; font-size: 1.6rem; color: var(--primary); }
+        .rent-success-title { font-size: 1.3rem; font-weight: 900; text-transform: uppercase; color: #fff; margin-bottom: 0.5rem; }
+        .rent-success-sub { font-size: 11px; color: rgba(255,255,255,0.35); font-family: 'Trebuchet MS', sans-serif; line-height: 1.8; }
+        .rent-success-ref { margin: 1.2rem 0; padding: 0.8rem; background: rgba(212,160,23,0.08); border: 1px solid rgba(212,160,23,0.2); font-size: 12px; font-weight: 700; color: var(--primary); font-family: 'Trebuchet MS', sans-serif; letter-spacing: 0.1em; }
+        .rent-done-btn { width: 100%; padding: 12px; margin-top: 1rem; background: transparent; color: rgba(255,255,255,0.5); border: 1px solid rgba(255,255,255,0.1); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em; cursor: pointer; font-family: 'Trebuchet MS', sans-serif; transition: all 0.3s; }
+        .rent-done-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* ====== CHECKOUT MODAL ====== */
+        #pay-modal {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.88);
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+        #pay-modal.open { display: flex; }
+
+        .pay-box {
+            background: #111; border: 1px solid rgba(212,160,23,0.25);
+            width: 100%; max-width: 420px; padding: 2.5rem;
+            position: relative;
+        }
+        .pay-close {
+            position: absolute; top: 1rem; right: 1.2rem;
+            background: none; border: none; color: rgba(255,255,255,0.4);
+            font-size: 1.4rem; cursor: pointer;
+        }
+        .pay-close:hover { color: var(--primary); }
+
+        .pay-step { display: none; }
+        .pay-step.active { display: block; }
+
+        .pay-tag {
+            font-size: 9px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.4em; color: var(--primary);
+            font-family: 'Trebuchet MS', sans-serif; margin-bottom: 0.5rem;
+        }
+        .pay-title {
+            font-size: 1.4rem; font-weight: 900; text-transform: uppercase;
+            color: #fff; margin-bottom: 1.5rem;
+        }
+        .pay-summary {
+            background: rgba(212,160,23,0.05);
+            border: 1px solid rgba(212,160,23,0.15);
+            padding: 1rem 1.2rem; margin-bottom: 1.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .pay-summary-name {
+            font-size: 13px; font-weight: 900; text-transform: uppercase;
+            color: #fff; font-family: 'Trebuchet MS', sans-serif;
+        }
+        .pay-summary-price {
+            font-size: 13px; font-weight: 700; color: var(--primary);
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        .pay-field { margin-bottom: 1.1rem; }
+        .pay-field label {
+            display: block; font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.4); margin-bottom: 6px;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .pay-field input {
+            width: 100%; background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 10px 14px; font-size: 14px;
+            outline: none; transition: border 0.3s; box-sizing: border-box;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .pay-field input:focus { border-color: var(--primary); }
+        .pay-row-fields { display: flex; gap: 1rem; }
+        .pay-row-fields .pay-field { flex: 1; }
+
+        .pay-submit {
+            width: 100%; padding: 13px; margin-top: 0.5rem;
+            background: var(--primary); color: #000;
+            border: none; font-size: 11px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            cursor: pointer; font-family: 'Trebuchet MS', sans-serif;
+            transition: opacity 0.3s;
+        }
+        .pay-submit:hover { opacity: 0.85; }
+
+        /* Processing */
+        .pay-processing {
+            text-align: center; padding: 2rem 0;
+        }
+        .pay-spinner {
+            width: 48px; height: 48px; border: 2px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto 1.5rem;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .pay-processing-text {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.5); font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        /* Success */
+        .pay-success { text-align: center; padding: 1.5rem 0; }
+        .pay-check {
+            width: 60px; height: 60px; border-radius: 50%;
+            background: rgba(212,160,23,0.1); border: 2px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.5rem; font-size: 1.6rem; color: var(--primary);
+        }
+        .pay-success-title {
+            font-size: 1.3rem; font-weight: 900; text-transform: uppercase;
+            color: #fff; margin-bottom: 0.5rem;
+        }
+        .pay-success-sub {
+            font-size: 11px; color: rgba(255,255,255,0.35);
+            font-family: 'Trebuchet MS', sans-serif; line-height: 1.7;
+        }
+        .pay-success-ref {
+            margin: 1.2rem 0; padding: 0.8rem;
+            background: rgba(212,160,23,0.08); border: 1px solid rgba(212,160,23,0.2);
+            font-size: 12px; font-weight: 700; color: var(--primary);
+            font-family: 'Trebuchet MS', sans-serif; letter-spacing: 0.1em;
+        }
+        .pay-done-btn {
+            width: 100%; padding: 12px; margin-top: 1.2rem;
+            background: transparent; color: rgba(255,255,255,0.5);
+            border: 1px solid rgba(255,255,255,0.1); font-size: 10px;
+            font-weight: 700; text-transform: uppercase; letter-spacing: 0.3em;
+            cursor: pointer; font-family: 'Trebuchet MS', sans-serif;
+            transition: all 0.3s;
+        }
+        .pay-done-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        .card-pay-btn {
+            display: block; width: 100%; margin-top: 10px;
+            padding: 10px; background: var(--primary); color: #000;
+            border: none; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            cursor: pointer; font-family: 'Trebuchet MS', sans-serif;
+            transition: opacity 0.3s;
+        }
+        .card-pay-btn:hover { opacity: 0.85; }
+
+        .card-rent-btn {
+            display: block; width: 100%; margin-top: 6px;
+            padding: 10px; background: transparent; color: rgba(255,255,255,0.7);
+            border: 1px solid rgba(255,255,255,0.2); font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            cursor: pointer; font-family: 'Trebuchet MS', sans-serif;
+            transition: all 0.3s;
+        }
+        .card-rent-btn:hover { border-color: var(--primary); color: var(--primary); }
+        #auth-modal {
+            display: none; position: fixed; inset: 0; z-index: 200;
+            background: rgba(0,0,0,0.85);
+            align-items: center; justify-content: center;
+            backdrop-filter: blur(6px);
+        }
+        #auth-modal.open { display: flex; }
+
+        .auth-box {
+            background: #111; border: 1px solid rgba(212,160,23,0.2);
+            width: 100%; max-width: 400px; padding: 2.5rem;
+            position: relative;
+        }
+        .auth-close {
+            position: absolute; top: 1rem; right: 1.2rem;
+            background: none; border: none; color: rgba(255,255,255,0.4);
+            font-size: 1.4rem; cursor: pointer; line-height: 1;
+        }
+        .auth-close:hover { color: var(--primary); }
+
+        .auth-tabs { display: flex; gap: 0; margin-bottom: 2rem; }
+        .auth-tab {
+            flex: 1; padding: 10px; text-align: center;
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.2em; cursor: pointer;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
+            background: transparent;
+            transition: all 0.3s ease;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .auth-tab.active { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        .auth-panel { display: none; }
+        .auth-panel.active { display: block; }
+
+        .auth-step { display: none; }
+        .auth-step.active { display: block; }
+
+        .auth-processing {
+            text-align: center; padding: 2.5rem 0;
+        }
+        .auth-spinner {
+            width: 44px; height: 44px; border: 2px solid rgba(255,255,255,0.1);
+            border-top-color: var(--primary); border-radius: 50%;
+            animation: spin 0.8s linear infinite; margin: 0 auto 1.2rem;
+        }
+        .auth-processing-text {
+            font-size: 11px; text-transform: uppercase; letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.4); font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        .auth-success { text-align: center; padding: 1.5rem 0; }
+        .auth-check {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: rgba(212,160,23,0.1); border: 2px solid var(--primary);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 1.2rem; font-size: 1.5rem; color: var(--primary);
+        }
+        .auth-success-name {
+            font-size: 1.2rem; font-weight: 900; text-transform: uppercase;
+            color: #fff; margin-bottom: 0.4rem;
+        }
+        .auth-success-sub {
+            font-size: 11px; color: rgba(255,255,255,0.35);
+            font-family: 'Trebuchet MS', sans-serif; line-height: 1.7;
+        }
+        .auth-done-btn {
+            width: 100%; padding: 12px; margin-top: 1.5rem;
+            background: var(--primary); color: #000;
+            border: none; font-size: 10px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            cursor: pointer; font-family: 'Trebuchet MS', sans-serif;
+            transition: opacity 0.3s;
+        }
+        .auth-done-btn:hover { opacity: 0.85; }
+
+        .auth-field { margin-bottom: 1.2rem; }
+        .auth-field label {
+            display: block; font-size: 9px; font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            color: rgba(255,255,255,0.4); margin-bottom: 6px;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .auth-field input {
+            width: 100%; background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: #fff; padding: 10px 14px; font-size: 14px;
+            outline: none; transition: border 0.3s;
+            box-sizing: border-box;
+        }
+        .auth-field input:focus { border-color: var(--primary); }
+
+        .auth-submit {
+            width: 100%; padding: 12px;
+            background: var(--primary); color: #000;
+            border: none; font-size: 11px; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 0.3em;
+            cursor: pointer; margin-top: 0.5rem;
+            transition: opacity 0.3s;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .auth-submit:hover { opacity: 0.85; }
+
+        /* ====== HERO ====== */
+        #hero {
+            position: relative; height: 100vh; width: 100%;
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+        }
+        #hero-slides { position: absolute; inset: 0; z-index: 0; }
+
+        .hero-slide {
+            position: absolute; inset: 0;
+            opacity: 0; transform: scale(1.05);
+            transition: opacity 1.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+                        transform 1.4s ease;
+        }
+        .hero-slide.active {
+            opacity: 1; z-index: 1; transform: scale(1);
+            animation: slow-drift 10s ease-out forwards;
+        }
+        .hero-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        @keyframes slow-drift {
+            from { transform: scale(1); }
+            to   { transform: scale(1.08); }
+        }
+
+        .hero-grad {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, #0a0a0a 0%, transparent 60%);
+            pointer-events: none; z-index: 10;
+        }
+        .hero-dim {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.32);
+            pointer-events: none; z-index: 10;
+        }
+
+        .hero-content {
+            position: relative; z-index: 20;
+            width: 100%; max-width: 1200px; padding: 0 2.5rem;
+            pointer-events: none;
+        }
+        .hero-content > div { max-width: 56rem; }
+
+        #hero-tag {
+            display: inline-flex; align-items: center;
+            padding: 6px 18px;
+            border: 1px solid rgba(212,160,23,0.3); border-radius: 100px;
+            margin-bottom: 2rem; opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        #hero-tag span {
+            font-size: 10px; text-transform: uppercase;
+            font-weight: 700; letter-spacing: 0.4em; color: var(--primary);
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        #hero-title {
+            font-size: clamp(4.5rem, 13vw, 10rem);
+            text-transform: uppercase; line-height: 0.85;
+            letter-spacing: -0.05em; margin-bottom: 2.5rem;
+            opacity: 0; font-weight: 900;
+            transition: opacity 1s ease;
+        }
+        #hero-title span { display: inline-block; }
+
+        .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(212,160,23,0.4);
+        }
+
+        #hero-btns {
+            display: flex; align-items: center; gap: 2.5rem;
+            opacity: 0; pointer-events: auto;
+            transition: opacity 0.9s ease;
+        }
+        .hero-cta {
+            font-size: 13px; font-weight: 900; text-transform: uppercase;
+            letter-spacing: 0.2em; color: #fff;
+            font-family: 'Trebuchet MS', sans-serif;
+            position: relative; padding: 4px 0;
+        }
+        .hero-cta::after {
+            content: ''; position: absolute; bottom: 0; left: 0;
+            width: 0; height: 1px; background: var(--primary);
+            transition: width 0.4s ease;
+        }
+        .hero-cta:hover::after { width: 100%; }
+
+        .hero-line { width: 80px; height: 1px; background: rgba(255,255,255,0.2); }
+        .hero-label {
+            font-size: 10px; color: rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 0.15em; font-style: italic;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        /* Indicators */
+        .hero-indicators-wrap {
+            position: absolute; bottom: 2.5rem; right: 2.5rem;
+            z-index: 30; display: flex; flex-direction: column;
+            align-items: flex-end; gap: 1rem;
+        }
+        .indicators-row { display: flex; gap: 8px; }
+        .indicator-dot {
+            width: 48px; height: 2px; background: rgba(255,255,255,0.2);
+            position: relative; overflow: hidden; cursor: pointer;
+        }
+        .indicator-fill {
+            position: absolute; inset: 0; background: var(--primary);
+            transform: scaleX(0); transform-origin: left;
+            transition: transform 6000ms linear;
+        }
+        .indicator-fill.active { transform: scaleX(1); }
+
+        .slide-counter {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.4em;
+            text-transform: uppercase; color: rgba(255,255,255,0.3);
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        #current-index { color: var(--primary); font-size: 1.4rem; font-weight: 900; margin-left: 8px; }
+
+        /* ====== ABOUT ====== */
+        #about {
+            padding: 10rem 0; background: var(--bg);
+            position: relative; overflow: hidden;
+        }
+        .about-inner {
+            max-width: 1200px; margin: 0 auto; padding: 0 2.5rem;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .about-intro {
+            margin-bottom: 2.5rem;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .about-line { width: 1px; height: 80px; background: rgba(212,160,23,0.4); margin-bottom: 2.5rem; }
+        .about-label {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.8em; color: var(--primary); font-weight: 700;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+
+        h2.about-title {
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            max-width: 62rem; text-align: center;
+            line-height: 1.1; letter-spacing: -0.03em;
+            text-transform: uppercase; font-weight: 300;
+        }
+        h2.about-title .bold   { font-weight: 900; font-style: italic; }
+        h2.about-title .accent { color: var(--primary); font-weight: 900; }
+        h2.about-title .underlined {
+            font-weight: 900;
+            text-decoration: underline;
+            text-decoration-color: var(--primary);
+            text-underline-offset: 8px;
+        }
+        .about-desc {
+            margin-top: 3rem; color: rgba(255,255,255,0.4);
+            max-width: 36rem; text-align: center;
+            font-size: 1.1rem; line-height: 1.75; font-weight: 300;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 4rem; margin-top: 8rem; width: 100%;
+        }
+        .feature-card {
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; padding: 2.5rem;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: border-color 0.3s ease;
+        }
+        .feature-card:hover { border-color: rgba(212,160,23,0.2); }
+
+        .feature-icon { margin-bottom: 2rem; }
+        .feature-icon svg {
+            width: 40px; height: 40px;
+            stroke: var(--primary); fill: none; stroke-width: 1.5;
+            stroke-linecap: round; stroke-linejoin: round;
+        }
+
+        .feature-title {
+            font-size: 1.4rem; font-weight: 400; text-transform: uppercase;
+            letter-spacing: 0.15em; margin-bottom: 1rem;
+        }
+        .feature-desc { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+        /* ====== CATALOG ====== */
+        #catalog { padding: 10rem 0; background: #070707; min-height: 100vh; }
+        .catalog-inner { max-width: 1200px; margin: 0 auto; padding: 0 2.5rem; }
+
+        .catalog-header {
+            display: flex; flex-direction: column; gap: 2.5rem;
+            margin-bottom: 8rem;
+        }
+        @media (min-width: 1024px) {
+            .catalog-header { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+        }
+
+        .catalog-tag {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.4em; color: var(--primary); display: block;
+            margin-bottom: 1rem; font-family: 'Trebuchet MS', sans-serif;
+        }
+        h2.catalog-title {
+            font-size: clamp(3.5rem, 9vw, 7rem);
+            text-transform: uppercase; line-height: 1; letter-spacing: -0.05em;
+            font-weight: 900;
+        }
+
+        #filters {
+            display: flex; flex-wrap: wrap; gap: 0.75rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem;
+        }
+        .filter-btn {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.15em; padding: 8px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: none; color: #fff; cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .filter-btn:hover { border-color: var(--primary); }
+        .filter-btn.active { background: var(--primary); color: #000; border-color: var(--primary); }
+
+        #motos-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 4rem 3rem;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        @media (min-width: 640px)  { #motos-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { #motos-grid { grid-template-columns: repeat(3, 1fr); } }
+
+        /* ---- MOTO CARD ---- */
+        .moto-card {
+            position: relative;
+            transition: transform 0.6s cubic-bezier(0.25,1,0.5,1),
+                        box-shadow 0.6s ease;
+            perspective: 1000px;
+        }
+        .moto-card:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 30px 60px -20px rgba(212,160,23,0.12);
+        }
+
+        .card-inner {
+            position: relative; overflow: hidden;
+            aspect-ratio: 4 / 5;
+            background: var(--card); border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+            transform-style: preserve-3d;
+        }
+
+        .card-inner img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+            filter: grayscale(1);
+            transition: filter 0.7s ease, transform 1.2s cubic-bezier(0.25,1,0.5,1);
+        }
+        .moto-card:hover .card-inner img {
+            filter: grayscale(0);
+            transform: scale(1.1) rotate(2deg);
+        }
+
+        .card-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+        }
+
+        .card-info {
+            position: absolute; bottom: 0; left: 0; width: 100%;
+            padding: 2rem; transform: translateY(8px);
+            transition: transform 0.5s ease;
+        }
+        .moto-card:hover .card-info { transform: translateY(0); }
+
+        .card-cat {
+            font-size: 9px; text-transform: uppercase; font-weight: 900;
+            letter-spacing: 0.5em; color: var(--primary); display: block; margin-bottom: 6px;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .card-name {
+            font-size: 2rem; text-transform: uppercase; margin-bottom: 1rem;
+            font-weight: 200; letter-spacing: -0.03em;
+        }
+        .card-prices {
+            display: flex; justify-content: space-between; align-items: flex-end;
+            border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1.25rem;
+        }
+        .price-label {
+            font-size: 9px; color: rgba(255,255,255,0.4); text-transform: uppercase;
+            letter-spacing: 0.15em; display: block; margin-bottom: 3px;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .price-value  { font-weight: 700; font-size: 1rem; }
+        .rent-value   { font-weight: 700; color: var(--primary); }
+
+        .card-cta {
+            position: absolute; bottom: -1.5rem; right: -1.5rem;
+            width: 72px; height: 72px; background: var(--primary); color: #000;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: translateY(2.5rem);
+            transition: all 0.5s ease; z-index: 20;
+            box-shadow: 0 10px 40px -10px rgba(212,160,23,0.5);
+        }
+        .card-cta svg { width: 28px; height: 28px; stroke: #000; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .moto-card:hover .card-cta { opacity: 1; transform: translateY(0); }
+
+        /* ====== CONTACT ====== */
+        #contact {
+            position: relative; padding: 14rem 0; overflow: hidden; background: #000;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .contact-bg {
+            position: absolute; inset: 0; opacity: 0.2; z-index: 0;
+        }
+        .contact-bg img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
+
+        .contact-inner {
+            position: relative; z-index: 20;
+            width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 2.5rem;
+        }
+        .contact-content { max-width: 56rem; margin: 0 auto; text-align: center; }
+
+        .contact-tag {
+            font-weight: 700; letter-spacing: 0.6em; text-transform: uppercase;
+            font-size: 10px; color: var(--primary); margin-bottom: 1.5rem; display: block;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        h3.contact-title {
+            font-size: clamp(3rem, 9vw, 6.5rem);
+            text-transform: uppercase; letter-spacing: -0.05em;
+            margin-bottom: 2.5rem; font-style: italic; line-height: 0.9; font-weight: 900;
+        }
+        .contact-desc {
+            color: rgba(255,255,255,0.4); font-size: 1.05rem; margin-bottom: 4rem;
+            max-width: 42rem; margin-left: auto; margin-right: auto;
+            font-weight: 300; line-height: 1.75;
+        }
+        .contact-actions {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; gap: 2rem;
+        }
+        @media (min-width: 640px) { .contact-actions { flex-direction: row; } }
+
+        .contact-btn {
+            display: inline-block; background: #fff; color: #000;
+            font-weight: 900; text-transform: uppercase; font-size: 11px;
+            letter-spacing: 0.4em; padding: 1.5rem 3.5rem;
+            transition: background 0.5s ease, color 0.3s ease;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .contact-btn:hover { background: var(--primary); }
+
+        .contact-info { display: flex; flex-direction: column; align-items: center; }
+        .info-label {
+            font-size: 10px; font-weight: 700; letter-spacing: 0.3em;
+            text-transform: uppercase; color: rgba(255,255,255,0.3);
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .info-phone { color: var(--primary); margin-top: 4px; font-weight: 700; letter-spacing: 0.15em; font-size: 14px; }
+
+        /* ====== FOOTER ====== */
+        footer {
+            padding: 5rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: space-between; background: var(--bg); gap: 2.5rem;
+        }
+        @media (min-width: 768px) { footer { flex-direction: row; } }
+
+        .footer-brand { display: flex; flex-direction: column; align-items: center; }
+        @media (min-width: 768px) { .footer-brand { align-items: flex-start; } }
+
+        .footer-logo { font-size: 2rem; text-transform: uppercase; font-weight: 900; margin-bottom: 6px; color: #ffffff; letter-spacing: 0.05em; }
+        .footer-accent { color: var(--primary); }
+        .footer-sub {
+            font-size: 10px; color: rgba(255,255,255,0.3);
+            letter-spacing: 0.4em; text-transform: uppercase;
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .footer-links { display: flex; gap: 2.5rem; }
+        .footer-links span,
+        .footer-links a {
+            font-size: 10px; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.2em; color: rgba(255,255,255,0.4);
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .footer-links a:hover { color: var(--primary); }
+
+        /* ====== REVEAL ANIMATIONS ====== */
+        .reveal-el {
+            opacity: 0; transform: translateY(40px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+        .reveal-el.revealed { opacity: 1; transform: translateY(0); }
+
+        /* ====== CSS/STYLE from original style.css ====== */
+        #preloader-bar { transition: width 0.5s ease; }
+
+        .glass-nav {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            background: rgba(10,10,10,0.7);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 1.5rem 2.5rem !important;
+        }
+
+        .filter-btn.active { background: var(--primary); color: black; border-color: var(--primary); }
+
+        @media (max-width: 768px) { .glass-nav { padding: 1.5rem !important; } }
+    </style>
+</head>
+
+<body>
+
+    <!-- Overlays -->
+    <div class="noise"></div>
+    <div id="studio-light"></div>
+    <div id="scroll-progress"></div>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="preloader-panel"></div>
+        <div class="preloader-panel"></div>
+        <div id="preloader-inner">
+            <h2 id="preloader-text">SM-MOTOS</h2>
+            <div id="preloader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <a href="#" class="logo">SM-<span class="accent">MOTOS</span></a>
+        <nav>
+            <a href="#hero">home</a>
+            <a href="#about">Destaque</a>
+            <a href="#catalog">Motos</a>
+            <a href="#contact">Contacto</a>
+        </nav>
+        <div class="header-right">
+            <button class="btn-login" id="btn-login">Entrar</button>
+        </div>
+    </header>
+
+    <!-- Auth Modal -->
+    <div id="auth-modal">
+        <div class="auth-box">
+            <button class="auth-close" id="auth-close">&times;</button>
+
+            <!-- Step 1: Formulários -->
+            <div class="auth-step active" id="auth-step-form">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Login</button>
+                    <button class="auth-tab" data-tab="cadastro">Cadastro</button>
+                </div>
+                <!-- Login -->
+                <div class="auth-panel active" id="tab-login">
+                    <div class="auth-field">
+                        <label>Email</label>
+                        <input type="email" id="login-email" placeholder="o seu email">
+                    </div>
+                    <div class="auth-field">
+                        <label>Senha</label>
+                        <input type="password" id="login-senha" placeholder="a sua senha">
+                    </div>
+                    <button class="auth-submit" id="btn-entrar">Entrar</button>
+                </div>
+                <!-- Cadastro -->
+                <div class="auth-panel" id="tab-cadastro">
+                    <div class="auth-field">
+                        <label>Nome Completo</label>
+                        <input type="text" id="reg-nome" placeholder="o seu nome">
+                    </div>
+                    <div class="auth-field">
+                        <label>Email</label>
+                        <input type="email" id="reg-email" placeholder="o seu email">
+                    </div>
+                    <div class="auth-field">
+                        <label>Senha</label>
+                        <input type="password" id="reg-senha" placeholder="crie uma senha">
+                    </div>
+                    <button class="auth-submit" id="btn-registar">Criar Conta</button>
+                </div>
+            </div>
+
+            <!-- Step 2: A processar -->
+            <div class="auth-step" id="auth-step-processing">
+                <div class="auth-processing">
+                    <div class="auth-spinner"></div>
+                    <div class="auth-processing-text" id="auth-processing-text">A verificar...</div>
+                </div>
+            </div>
+
+            <!-- Step 3: Sucesso -->
+            <div class="auth-step" id="auth-step-success">
+                <div class="auth-success">
+                    <div class="auth-check">✓</div>
+                    <div class="auth-success-name" id="auth-success-name">Bem-vindo!</div>
+                    <div class="auth-success-sub" id="auth-success-sub">Sessão iniciada com sucesso.</div>
+                    <button class="auth-done-btn" id="auth-done-btn">Continuar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rent Modal -->
+    <div id="rent-modal">
+        <div class="rent-box">
+            <button class="rent-close" id="rent-close">&times;</button>
+
+            <!-- Step 1: Formulário -->
+            <div class="rent-step active" id="rent-step-form">
+                <div class="rent-tag">Aluguel</div>
+                <div class="rent-title">Reservar Moto</div>
+                <div class="rent-summary">
+                    <span class="rent-summary-name" id="rent-moto-name">—</span>
+                    <span class="rent-summary-price" id="rent-moto-price">MZN —/dia</span>
+                </div>
+                <div class="rent-field">
+                    <label>Nome Completo</label>
+                    <input type="text" id="rent-nome" placeholder="O seu nome completo">
+                </div>
+                <div class="rent-field">
+                    <label>Contacto (Telemóvel)</label>
+                    <input type="tel" id="rent-tel" placeholder="+258 8X XXX XXXX">
+                </div>
+                <div class="rent-row-fields">
+                    <div class="rent-field">
+                        <label>Data de Início</label>
+                        <input type="date" id="rent-inicio">
+                    </div>
+                    <div class="rent-field">
+                        <label>Data de Fim</label>
+                        <input type="date" id="rent-fim">
+                    </div>
+                </div>
+                <div class="rent-total-box">
+                    <span class="rent-total-label">Total Estimado</span>
+                    <span class="rent-total-value" id="rent-total">MZN 0</span>
+                </div>
+                <button class="rent-submit" id="rent-submit-btn">Confirmar Reserva</button>
+            </div>
+
+            <!-- Step 2: A processar -->
+            <div class="rent-step" id="rent-step-processing">
+                <div class="rent-processing">
+                    <div class="rent-spinner"></div>
+                    <div class="rent-processing-text">A processar a reserva...</div>
+                </div>
+            </div>
+
+            <!-- Step 3: Sucesso -->
+            <div class="rent-step" id="rent-step-success">
+                <div class="rent-success">
+                    <div class="rent-check">✓</div>
+                    <div class="rent-success-title">Reserva Confirmada!</div>
+                    <div class="rent-success-sub" id="rent-success-sub">A sua reserva foi registada com sucesso.</div>
+                    <div class="rent-success-ref" id="rent-ref">REF: —</div>
+                    <button class="rent-done-btn" id="rent-done-btn">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="pay-modal">
+        <div class="pay-box">
+            <button class="pay-close" id="pay-close">&times;</button>
+
+            <!-- Step 1: Formulário -->
+            <div class="pay-step active" id="step-form">
+                <div class="pay-tag">Checkout</div>
+                <div class="pay-title">Finalizar Compra</div>
+                <div class="pay-summary">
+                    <span class="pay-summary-name" id="pay-moto-name">—</span>
+                    <span class="pay-summary-price" id="pay-moto-price">—</span>
+                </div>
+                <div class="pay-field">
+                    <label>Nome Completo</label>
+                    <input type="text" id="pay-nome" placeholder="O seu nome completo">
+                </div>
+                <div class="pay-field">
+                    <label>Email</label>
+                    <input type="email" id="pay-email" placeholder="O seu email">
+                </div>
+                <div class="pay-field">
+                    <label>Número do Cartão</label>
+                    <input type="text" id="pay-card" placeholder="0000 0000 0000 0000" maxlength="19">
+                </div>
+                <div class="pay-row-fields">
+                    <div class="pay-field">
+                        <label>Validade</label>
+                        <input type="text" placeholder="MM/AA" maxlength="5">
+                    </div>
+                    <div class="pay-field">
+                        <label>CVV</label>
+                        <input type="text" placeholder="000" maxlength="3">
+                    </div>
+                </div>
+                <button class="pay-submit" id="pay-submit-btn">Confirmar Pagamento</button>
+            </div>
+
+            <!-- Step 2: A processar -->
+            <div class="pay-step" id="step-processing">
+                <div class="pay-processing">
+                    <div class="pay-spinner"></div>
+                    <div class="pay-processing-text">A processar o pagamento...</div>
+                </div>
+            </div>
+
+            <!-- Step 3: Sucesso -->
+            <div class="pay-step" id="step-success">
+                <div class="pay-success">
+                    <div class="pay-check">✓</div>
+                    <div class="pay-success-title">Compra Confirmada!</div>
+                    <div class="pay-success-sub">
+                        O seu pagamento foi processado com sucesso.<br>
+                        Receberá uma confirmação no email indicado.
+                    </div>
+                    <div class="pay-success-ref" id="pay-ref">REF: —</div>
+                    <button class="pay-done-btn" id="pay-done-btn">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+
+        <!-- ===== HERO ===== -->
+        <section id="hero">
+            <div id="hero-slides"></div>
+            <div class="hero-grad"></div>
+            <div class="hero-dim"></div>
+
+            <div class="hero-content">
+                <div>
+                    <div id="hero-tag">
+                        <span>Tete · Exclusive Collection</span>
+                    </div>
+                    <h1 id="hero-title">
+                        <span>P u r a</span><br>
+                        <span class="outline-text">E n g e n h a r ia.</span>
+                    </h1>
+                    <div id="hero-btns">
+                        <a href="#catalog" class="hero-cta">Explorar Galeria</a>
+                        <div class="hero-line"></div>
+                        <span class="hero-label">Edição Limitada 2026</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-indicators-wrap">
+                <div class="indicators-row" id="hero-indicators"></div>
+                <div class="slide-counter">
+                    Slide <span id="current-index">01</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ABOUT ===== -->
+        <section id="about">
+            <div class="about-inner">
+                <div class="about-intro reveal-el">
+                    <div class="about-line"></div>
+                    <span class="about-label">NÓS</span>
+                </div>
+                <h2 class="about-title reveal-el">
+                    Transformamos <span class="bold">combustível</span> em
+                    <span class="accent">Adrenalina</span> e design em
+                    <span class="underlined">Arte.</span>
+                </h2>
+                <p class="about-desc reveal-el">
+                    Sediada em Tete, a SM-MOTOS é o destino final para quem busca não apenas uma moto, mas uma extensão da sua identidade.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card reveal-el">
+                        <div class="feature-icon">
+                            <!-- Diamond icon (Lucide inline SVG) -->
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2.7 10.3a2.41 2.41 0 0 0 0 3.41l7.59 7.59a2.41 2.41 0 0 0 3.41 0l7.59-7.59a2.41 2.41 0 0 0 0-3.41l-7.59-7.59a2.41 2.41 0 0 0-3.41 0Z"/>
+                            </svg>
+                        </div>
+                        <h4 class="feature-title">Curadoria Elite</h4>
+                        <p class="feature-desc">Modelos selecionados a dedo pelos maiores especialistas do país.</p>
+                    </div>
+
+                    <div class="feature-card reveal-el">
+                        <div class="feature-icon">
+                            <!-- Zap icon (Lucide inline SVG) -->
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                            </svg>
+                        </div>
+                        <h4 class="feature-title">Performance</h4>
+                        <p class="feature-desc">Mecânica de precisão para garantir o máximo de torque e segurança.</p>
+                    </div>
+
+                    <div class="feature-card reveal-el">
+                        <div class="feature-icon">
+                            <!-- Shield-check icon (Lucide inline SVG) -->
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                <path d="m9 12 2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <h4 class="feature-title">Exclusividade</h4>
+                        <p class="feature-desc">Atendimento personalizado com suporte direto 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CATALOG ===== -->
+        <section id="catalog">
+            <div class="catalog-inner">
+                <div class="catalog-header">
+                    <div>
+                        <span class="catalog-tag">Selecione sua arma</span>
+                        <h2 class="catalog-title">A <span class="outline-text">Coleção</span></h2>
+                    </div>
+                    <div id="filters">
+                        <button class="filter-btn active" data-filter="Todas">Todas</button>
+                        <button class="filter-btn" data-filter="Sport">Esportivas</button>
+                        <button class="filter-btn" data-filter="Nacionais">Urbanas</button>
+                        <button class="filter-btn" data-filter="Off-road">Aventureiras</button>
+                    </div>
+                </div>
+                <div id="motos-grid"></div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT ===== -->
+        <section id="contact">
+            <div class="contact-bg">
+                <img src="fotos/hero-3.png" alt="Showroom">
+            </div>
+            <div class="contact-inner">
+                <div class="contact-content">
+                    <span class="contact-tag reveal-el">Atendimento Exclusivo</span>
+                    <h3 class="contact-title reveal-el">
+                         <span class="outline-text">Privado.</span>
+                    </h3>
+                    <p class="contact-desc reveal-el">
+                        Agende uma consultoria personalizada com nossos especialistas em Tete. Experiência à porta fechada para colecionadores e entusiastas da alta performance.
+                    </p>
+                    <div class="contact-actions reveal-el">
+                        <a href="https://wa.me/258875517660" class="contact-btn">Falar com Consultor</a>
+                        <div class="contact-info">
+                            <span class="info-label">Disponível 24/7</span>
+                            <span class="info-phone">+258 87 551 7660 </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-brand">
+            <span class="footer-logo">SM-<span class="footer-accent">MOTOS</span></span>
+            <span class="footer-sub">Premium Motors Mozambique</span>
+        </div>
+        <div class="footer-links">
+            <span>Tete, MZ</span>
+            <a href="#">Instagram</a>
+            <a href="#">Legal</a>
+        </div>
+    </footer>
+
+    <!-- ===================================================
+         JAVASCRIPT — 100% Vanilla, sem dependências externas
+         GSAP → CSS transitions + requestAnimationFrame
+         Lenis → scroll-behavior: smooth (CSS nativo)
+         Lucide → SVG inline acima
+         Tailwind → CSS personalizado acima
+    =================================================== -->
+    <script>
+    /* ======= DATA ======= */
+    const MOTOS = [
+        { id:1,  name:'Yamaha YZF-R3',          category:'Sport',     price:'850.000',   rent:'8.500', image:'fotos/moto-1.png' },
+        { id:2,  name:'Ducati Monster 797',      category:'Sport',     price:'1.200.000', rent:'10.500', image:'fotos/moto-2.png' },
+        { id:3,  name:'Honda PCX 150',           category:'Nacionais',   price:'80.000',   rent:'1.100', image:'fotos/moto-3.png' },
+        { id:4,  name:'Yamaha NMAX 155',         category:'Nacionais',   price:'70.000',   rent:'1.000', image:'fotos/moto-4.png' },
+        { id:5,  name:'Royal Enfield Himalayan', category:'Off-road',  price:'720.000',   rent:'6.300', image:'fotos/moto-5.png' },
+        { id:6,  name:'KTM 390 Adventure',       category:'Off-road',  price:'780.000',   rent:'7.000', image:'fotos/moto-6.png' },
+        { id:9,  name:'TVS Apache RTR 160',      category:'Sport', price:'450.000',   rent:'4000',   image:'fotos/1.jpg' },
+        { id:10, name:'TVS Star HLX 150',        category:'Nacionais', price:'85.000',    rent:'1400',   image:'fotos/2.jpg' },
+        { id:11, name:'Hero 125',        category:'Off-road', price:'280.000',    rent:'2500',   image:'fotos/3.jpg' },
+        { id:12, name:'XL Honda 125',           category:'Off-road', price:'310.000',   rent:'3500',   image:'fotos/4.jpg' },
+        { id:13, name:'Crf Honda 250f',       category:'Off-road', price:'325.000',   rent:'3750',   image:'fotos/5.jpg' },
+        { id:14, name:'Suzuki Gx',    category:'Sport', price:'815.000',   rent:'8000',   image:'fotos/6.jpg' },
+        { id:15, name:'TVS Max 4R',              category:'Nacionais', price:'80.000',    rent:'1300',   image:'fotos/7.jpg' },
+        { id:16, name:'Nuovi Beta RX450',    category:'Off-road', price:'330.000',   rent:'3800',   image:'fotos/8.jpg' },
+        { id:17, name:'Lifan',    category:'Nacionais', price:'35.000',    rent:'800',   image:'fotos/9.jpg' }
+    ];
+
+    const HERO_IMAGES = [
+        'fotos/hero-1.png',
+        'fotos/hero-2.png',
+        'fotos/hero-3.png',
+        'fotos/hero-4.png'
+    ];
+
+    /* ======= PRELOADER ======= */
+    function initPreloader() {
+        const bar      = document.getElementById('preloader-bar');
+        const text     = document.getElementById('preloader-text');
+        const panels   = document.querySelectorAll('.preloader-panel');
+        const loader   = document.getElementById('preloader');
+
+        // Barra cresce
+        setTimeout(() => { bar.style.width = '280px'; }, 100);
+        // Texto aparece
+        setTimeout(() => { text.style.opacity = '1'; }, 700);
+
+        // Painéis abrem, hero aparece
+        setTimeout(() => {
+            text.style.opacity = '0';
+            bar.style.opacity  = '0';
+            panels[0].classList.add('exit-left');
+            panels[1].classList.add('exit-right');
+
+            setTimeout(() => {
+                loader.style.display = 'none';
+                // Animar hero
+                requestAnimationFrame(() => {
+                    document.getElementById('hero-tag').style.opacity   = '1';
+                    document.getElementById('hero-title').style.opacity = '1';
+                    document.getElementById('hero-btns').style.opacity  = '1';
+                });
+            }, 1500);
+        }, 2400);
+    }
+
+    /* ======= HERO CAROUSEL ======= */
+    let currentSlide = 0;
+
+    function initHero() {
+        const slidesWrap = document.getElementById('hero-slides');
+        const indRow     = document.getElementById('hero-indicators');
+
+        HERO_IMAGES.forEach((src, i) => {
+            // Slide
+            const slide = document.createElement('div');
+            slide.className = 'hero-slide' + (i === 0 ? ' active' : '');
+            slide.innerHTML = `<img src="${src}" alt="Hero ${i+1}" loading="${i===0?'eager':'lazy'}">`;
+            slidesWrap.appendChild(slide);
+
+            // Indicador
+            const dot  = document.createElement('div');
+            dot.className = 'indicator-dot';
+            const fill = document.createElement('div');
+            fill.className = 'indicator-fill' + (i === 0 ? ' active' : '');
+            dot.appendChild(fill);
+            dot.addEventListener('click', () => goToSlide(i));
+            indRow.appendChild(dot);
+        });
+
+        setInterval(nextSlide, 6000);
+    }
+
+    function nextSlide() {
+        goToSlide((currentSlide + 1) % HERO_IMAGES.length);
+    }
+
+    function goToSlide(index) {
+        if (index === currentSlide) return;
+
+        const slides = document.querySelectorAll('.hero-slide');
+        const fills  = document.querySelectorAll('.indicator-fill');
+
+        slides[currentSlide].classList.remove('active');
+        fills[currentSlide].classList.remove('active');
+        fills[currentSlide].style.transition = 'none';
+        fills[currentSlide].style.transform  = 'scaleX(0)';
+
+        currentSlide = index;
+        slides[currentSlide].classList.add('active');
+
+        // Reiniciar fill com transição
+        setTimeout(() => {
+            fills[currentSlide].style.transition = 'transform 6000ms linear';
+            fills[currentSlide].classList.add('active');
+        }, 60);
+
+        document.getElementById('current-index').textContent =
+            (currentSlide + 1).toString().padStart(2, '0');
+    }
+
+    /* ======= CATALOG ======= */
+    function initCatalog() {
+        renderMotos('Todas');
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelector('.filter-btn.active').classList.remove('active');
+                btn.classList.add('active');
+
+                const grid   = document.getElementById('motos-grid');
+                const filter = btn.dataset.filter;
+
+                // Fade out
+                grid.style.opacity   = '0';
+                grid.style.transform = 'translateY(20px)';
+
+                setTimeout(() => {
+                    renderMotos(filter);
+                    // Fade in
+                    requestAnimationFrame(() => {
+                        grid.style.opacity   = '1';
+                        grid.style.transform = 'translateY(0)';
+                    });
+                }, 420);
+
+                // Studio light cor
+                const light = document.getElementById('studio-light');
+                const colors = {
+                    'Todas':     'rgba(212,160,23,0.08)',
+                    'Sport':     'rgba(255,50,50,0.08)',
+                    'Scooter':   'rgba(50,150,255,0.08)',
+                    'Off-road':  'rgba(50,255,100,0.08)',
+                    'Nacionais': 'rgba(255,165,0,0.1)',
+                };
+                const c = colors[filter] || colors['Todas'];
+                light.style.background = `radial-gradient(circle at center, ${c} 0%, transparent 70%)`;
+            });
+        });
+    }
+
+    function renderMotos(filter) {
+        const grid    = document.getElementById('motos-grid');
+        grid.innerHTML = '';
+
+        const list = filter === 'Todas' ? MOTOS : MOTOS.filter(m => m.category === filter);
+
+        list.forEach(moto => {
+            const card = document.createElement('div');
+            card.className = 'moto-card';
+            card.innerHTML = `
+                <div class="card-inner">
+                    <img src="${moto.image}" alt="${moto.name}" loading="lazy">
+                    <div class="card-overlay"></div>
+                    <div class="card-info">
+                        <span class="card-cat">${moto.category}</span>
+                        <h3 class="card-name">${moto.name}</h3>
+                        <div class="card-prices">
+                            <div>
+                                <span class="price-label">Venda</span>
+                                <span class="price-value">MZN ${moto.price}</span>
+                            </div>
+                            <div style="text-align:right">
+                                <span class="price-label">Aluguel / dia</span>
+                                <span class="rent-value">MZN ${moto.rent}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://wa.me/258875517660?text=Olá, tenho interesse na ${encodeURIComponent(moto.name)}" class="card-cta" target="_blank">
+                    <!-- message-circle icon -->
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </a>
+                <button class="card-pay-btn" onclick="openPayModal('${moto.name}', '${moto.price}')">Comprar</button>
+                <button class="card-rent-btn" onclick="openRentModal('${moto.name}', '${moto.rent}')">Alugar</button>
+            `;
+            grid.appendChild(card);
+        });
+
+        // 3D tilt ao hover (cards recém-criados)
+        initCardTilt();
+    }
+
+    /* ======= HEADER SCROLL ======= */
+    function initHeader() {
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('glass-nav', window.scrollY > 100);
+        }, { passive: true });
+    }
+
+    /* ======= STUDIO LIGHT SEGUE O RATO ======= */
+    function initMouseLight() {
+        document.addEventListener('mousemove', (e) => {
+            document.getElementById('studio-light').style.background =
+                `radial-gradient(circle at ${e.clientX}px ${e.clientY}px, rgba(212,160,23,0.08) 0%, transparent 60%)`;
+        }, { passive: true });
+    }
+
+    /* ======= SCROLL PROGRESS ======= */
+    function initScrollProgress() {
+        const bar = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrolled = document.documentElement.scrollTop;
+            const height   = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            bar.style.width = (scrolled / height * 100) + '%';
+        }, { passive: true });
+    }
+
+    /* ======= REVEAL ON SCROLL (substitui ScrollTrigger do GSAP) ======= */
+    function initReveal() {
+        const obs = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.classList.add('revealed');
+                    obs.unobserve(e.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal-el').forEach(el => obs.observe(el));
+    }
+
+    /* ======= CARD 3D TILT ======= */
+    function initCardTilt() {
+        document.querySelectorAll('.moto-card').forEach(card => {
+            const inner = card.querySelector('.card-inner');
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const xc   = rect.width  / 2;
+                const yc   = rect.height / 2;
+                const dx   = (e.clientX - rect.left)  - xc;
+                const dy   = (e.clientY - rect.top)   - yc;
+
+                inner.style.transform =
+                    `rotateY(${dx / 12}deg) rotateX(${-dy / 12}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                inner.style.transform = 'rotateY(0) rotateX(0)';
+            });
+        });
+    }
+
+    /* ======= MAGNETIC BUTTONS ======= */
+    function initMagnetic() {
+        document.querySelectorAll('.card-cta, .contact-btn').forEach(btn => {
+            btn.addEventListener('mousemove', (e) => {
+                const rect = btn.getBoundingClientRect();
+                const x = (e.clientX - rect.left - rect.width  / 2) * 0.35;
+                const y = (e.clientY - rect.top  - rect.height / 2) * 0.35;
+                btn.style.transform = `translate(${x}px, ${y}px)`;
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transition = 'transform 0.5s cubic-bezier(0.25, 1.5, 0.5, 1)';
+                btn.style.transform  = 'translate(0, 0)';
+                setTimeout(() => { btn.style.transition = ''; }, 500);
+            });
+        });
+    }
+
+    /* ======= INIT ======= */
+    document.addEventListener('DOMContentLoaded', () => {
+        initPreloader();
+        initHero();
+        initCatalog();
+        initHeader();
+        initMouseLight();
+        initScrollProgress();
+        initReveal();
+        initMagnetic();
+    });
+        // ====== RENT SIMULATION ======
+        const rentModal = document.getElementById('rent-modal');
+        const rentClose = document.getElementById('rent-close');
+        const rentDone  = document.getElementById('rent-done-btn');
+        let   rentPerDay = 0;
+
+        function showRentStep(id) {
+            document.querySelectorAll('.rent-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function openRentModal(name, rent) {
+            rentPerDay = parseFloat(rent.replace('.', '').replace(',', '.')) || 0;
+            document.getElementById('rent-moto-name').textContent = name;
+            document.getElementById('rent-moto-price').textContent = 'MZN ' + rent + '/dia';
+            document.getElementById('rent-total').textContent = 'MZN 0';
+            document.getElementById('rent-inicio').value = '';
+            document.getElementById('rent-fim').value = '';
+            showRentStep('rent-step-form');
+            rentModal.classList.add('open');
+        }
+
+        function calcRentTotal() {
+            const ini = document.getElementById('rent-inicio').value;
+            const fim = document.getElementById('rent-fim').value;
+            if (!ini || !fim) return;
+            const dias = Math.ceil((new Date(fim) - new Date(ini)) / 86400000);
+            if (dias <= 0) { document.getElementById('rent-total').textContent = 'Datas inválidas'; return; }
+            const total = (dias * rentPerDay).toLocaleString('pt-MZ');
+            document.getElementById('rent-total').textContent = 'MZN ' + total + ' (' + dias + ' dia' + (dias > 1 ? 's' : '') + ')';
+        }
+        document.getElementById('rent-inicio').addEventListener('change', calcRentTotal);
+        document.getElementById('rent-fim').addEventListener('change', calcRentTotal);
+
+        document.getElementById('rent-submit-btn').addEventListener('click', () => {
+            const nome = document.getElementById('rent-nome').value.trim();
+            const tel  = document.getElementById('rent-tel').value.trim();
+            const ini  = document.getElementById('rent-inicio').value;
+            const fim  = document.getElementById('rent-fim').value;
+            if (!nome || !tel || !ini || !fim) { alert('Preencha todos os campos.'); return; }
+            const dias = Math.ceil((new Date(fim) - new Date(ini)) / 86400000);
+            if (dias <= 0) { alert('As datas são inválidas.'); return; }
+            showRentStep('rent-step-processing');
+            setTimeout(() => {
+                const ref = 'ALG' + Date.now().toString().slice(-7);
+                document.getElementById('rent-ref').textContent = 'REF: ' + ref;
+                document.getElementById('rent-success-sub').innerHTML =
+                    'Reserva de <strong>' + dias + ' dia(s)</strong> confirmada.<br>Entraremos em contacto pelo número fornecido.';
+                showRentStep('rent-step-success');
+            }, 2500);
+        });
+
+        function closeRentModal() {
+            rentModal.classList.remove('open');
+            setTimeout(() => showRentStep('rent-step-form'), 400);
+        }
+        rentClose.addEventListener('click', closeRentModal);
+        rentDone.addEventListener('click', closeRentModal);
+        rentModal.addEventListener('click', (e) => { if (e.target === rentModal) closeRentModal(); });
+
+        // ====== CHECKOUT SIMULATION ======
+        const payModal = document.getElementById('pay-modal');
+        const payClose = document.getElementById('pay-close');
+        const payDone  = document.getElementById('pay-done-btn');
+
+        function showStep(id) {
+            document.querySelectorAll('.pay-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function openPayModal(name, price) {
+            document.getElementById('pay-moto-name').textContent = name;
+            document.getElementById('pay-moto-price').textContent = 'MZN ' + price;
+            showStep('step-form');
+            payModal.classList.add('open');
+        }
+
+        document.getElementById('pay-submit-btn').addEventListener('click', () => {
+            const nome  = document.getElementById('pay-nome').value.trim();
+            const email = document.getElementById('pay-email').value.trim();
+            const card  = document.getElementById('pay-card').value.trim();
+            if (!nome || !email || !card) {
+                alert('Por favor preencha todos os campos.');
+                return;
+            }
+            showStep('step-processing');
+            setTimeout(() => {
+                const ref = 'SM' + Date.now().toString().slice(-8).toUpperCase();
+                document.getElementById('pay-ref').textContent = 'REF: ' + ref;
+                showStep('step-success');
+            }, 2500);
+        });
+
+        // Formatar número do cartão automaticamente
+        document.getElementById('pay-card').addEventListener('input', function() {
+            this.value = this.value.replace(/\D/g, '').replace(/(.{4})/g, '$1 ').trim().slice(0, 19);
+        });
+
+        function closePayModal() {
+            payModal.classList.remove('open');
+            showStep('step-form');
+        }
+        payClose.addEventListener('click', closePayModal);
+        payDone.addEventListener('click', closePayModal);
+        payModal.addEventListener('click', (e) => { if (e.target === payModal) closePayModal(); });
+
+        // ====== AUTH MODAL ======
+        const modal    = document.getElementById('auth-modal');
+        const btnLogin = document.getElementById('btn-login');
+        const authClose = document.getElementById('auth-close');
+        const tabs     = document.querySelectorAll('.auth-tab');
+        const panels   = document.querySelectorAll('.auth-panel');
+
+        function showAuthStep(id) {
+            document.querySelectorAll('.auth-step').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function closeAuthModal() {
+            modal.classList.remove('open');
+            setTimeout(() => showAuthStep('auth-step-form'), 400);
+        }
+
+        btnLogin.addEventListener('click', () => { showAuthStep('auth-step-form'); modal.classList.add('open'); });
+        authClose.addEventListener('click', closeAuthModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeAuthModal(); });
+        document.getElementById('auth-done-btn').addEventListener('click', () => {
+            closeAuthModal();
+            btnLogin.textContent = '👤 ' + (window._authName || 'Conta');
+        });
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                panels.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Simulação Login
+        document.getElementById('btn-entrar').addEventListener('click', () => {
+            const email = document.getElementById('login-email').value.trim();
+            const senha = document.getElementById('login-senha').value.trim();
+            if (!email || !senha) { alert('Preencha todos os campos.'); return; }
+            document.getElementById('auth-processing-text').textContent = 'A verificar credenciais...';
+            showAuthStep('auth-step-processing');
+            setTimeout(() => {
+                window._authName = email.split('@')[0];
+                document.getElementById('auth-success-name').textContent = 'Bem-vindo, ' + window._authName + '!';
+                document.getElementById('auth-success-sub').textContent = 'Sessão iniciada com sucesso.';
+                showAuthStep('auth-step-success');
+            }, 2000);
+        });
+
+        // Simulação Cadastro
+        document.getElementById('btn-registar').addEventListener('click', () => {
+            const nome  = document.getElementById('reg-nome').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const senha = document.getElementById('reg-senha').value.trim();
+            if (!nome || !email || !senha) { alert('Preencha todos os campos.'); return; }
+            document.getElementById('auth-processing-text').textContent = 'A criar a sua conta...';
+            showAuthStep('auth-step-processing');
+            setTimeout(() => {
+                window._authName = nome.split(' ')[0];
+                document.getElementById('auth-success-name').textContent = 'Conta criada, ' + window._authName + '!';
+                document.getElementById('auth-success-sub').textContent = 'O seu registo foi concluído com sucesso.';
+                showAuthStep('auth-step-success');
+            }, 2000);
+        });
+
+    </script>
+</body>
+</html>
